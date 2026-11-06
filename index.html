@@ -208,11 +208,10 @@
 
       .swatches { display: flex; gap: 5px; }
       .swatch { width: 14px; height: 14px; border-radius: 50%; border: 1px solid rgba(18, 18, 18, 0.12); }
-      .swatch.red { background: #ff5264; }
-      .swatch.blue { background: #4385f4; }
-      .swatch.green { background: #25c66b; }
-      .swatch.black { background: #101114; }
-      .swatch.white { background: #fff; }
+      .swatch.gray { background: hsl(210 20% 50%); }
+      .swatch.red { background: hsl(0 20% 50%); }
+      .swatch.green { background: hsl(120 20% 50%); }
+      .swatch.blue { background: hsl(240 20% 50%); }
 
       .instructions {
         display: grid;
@@ -432,7 +431,7 @@
     <main class="app-shell" id="homeScreen" aria-labelledby="pageTitle">
       <nav class="topbar" aria-label="Main navigation">
         <a class="brand" href="#" aria-label="Color Reflex home"><span class="brand-mark">CR</span> Color Reflex</a>
-        <span class="topbar-note">A 15-trial reaction test</span>
+        <span class="topbar-note">A 16-trial reaction test</span>
       </nav>
 
       <section class="hero">
@@ -447,10 +446,10 @@
         <div>
           <p class="section-label">Your challenge</p>
           <h2 id="startHeading">How fast can you respond to color?</h2>
-          <p>Five colors. Three rounds. Fifteen chances to find your fastest response. The button will appear large and centered every time.</p>
+          <p>Four colors. Four rounds. Sixteen chances to find your fastest response. The button will appear large and centered every time.</p>
           <div class="color-key" aria-label="Colors in the test">
-            <span class="swatches" aria-hidden="true"><i class="swatch red"></i><i class="swatch blue"></i><i class="swatch green"></i><i class="swatch black"></i><i class="swatch white"></i></span>
-            <span>15 trials · measured in milliseconds</span>
+            <span class="swatches" aria-hidden="true"><i class="swatch gray"></i><i class="swatch red"></i><i class="swatch green"></i><i class="swatch blue"></i></span>
+            <span>16 trials · measured in milliseconds</span>
           </div>
         </div>
         <button class="primary-button" id="startButton" type="button">Begin test</button>
@@ -469,7 +468,7 @@
           <span class="countdown-kicker">Get ready</span>
           <strong class="countdown-value" id="countdownValue">3</strong>
         </div>
-        <div class="test-hud" id="testHud"><span>Color Reflex</span><span id="trialLabel">Trial 01 / 15</span></div>
+        <div class="test-hud" id="testHud"><span>Color Reflex</span><span id="trialLabel">Trial 01 / 16</span></div>
         <div class="wait-message" id="waitMessage">Wait for it</div>
         <button class="reaction-button" id="reactionButton" type="button" aria-label="Click now">Click</button>
         <div class="progress-track" id="progressTrack"><div class="progress-bar" id="progressBar"></div></div>
@@ -480,7 +479,7 @@
       <div class="results-inner">
         <div class="results-heading">
           <div><p class="eyebrow">Test complete</p><h2 id="resultsTitle">Your<br /><em>reflex.</em></h2></div>
-          <p>Every response tells a small story. Here’s the full picture from all 15 trials.</p>
+          <p>Every response tells a small story. Here’s the full picture from all 16 trials.</p>
         </div>
 
         <div class="metrics" aria-label="Summary results">
@@ -499,7 +498,7 @@
           </div>
         </div>
         <div class="results-card color-means-card">
-          <div class="results-card-head"><strong>Mean by color</strong><span>Average across 3 trials</span></div>
+          <div class="results-card-head"><strong>Mean by color</strong><span>Average across 4 trials</span></div>
           <div class="color-means-grid" id="colorMeans"></div>
         </div>
         <div class="results-actions">
@@ -512,14 +511,14 @@
 
     <script>
       const COLORS = [
-        { name: "Red", screen: "#ff5264", button: "#08d9ef", text: "#071115", dot: "#ff5264", dark: false },
-        { name: "Blue", screen: "#4385f4", button: "#ffe255", text: "#141100", dot: "#4385f4", dark: false },
-        { name: "Green", screen: "#25c66b", button: "#e85ee8", text: "#18051a", dot: "#25c66b", dark: false },
-        { name: "Black", screen: "#101114", button: "#ffffff", text: "#101114", dot: "#101114", dark: false },
-        { name: "White", screen: "#f7f7f4", button: "#101114", text: "#ffffff", dot: "#ffffff", dark: true }
+        { name: "Gray", screen: "hsl(210 20% 50%)", button: "hsl(30 80% 88%)", text: "#21170d", dot: "hsl(210 20% 50%)", dark: false },
+        { name: "Red", screen: "hsl(0 20% 50%)", button: "hsl(180 80% 88%)", text: "#0d2020", dot: "hsl(0 20% 50%)", dark: false },
+        { name: "Green", screen: "hsl(120 20% 50%)", button: "hsl(300 80% 88%)", text: "#210d21", dot: "hsl(120 20% 50%)", dark: false },
+        { name: "Blue", screen: "hsl(240 20% 50%)", button: "hsl(60 80% 88%)", text: "#20200d", dot: "hsl(240 20% 50%)", dark: false }
       ];
 
-      const TOTAL_TRIALS = 15;
+      const REPLICATIONS = 4;
+      const TOTAL_TRIALS = COLORS.length * REPLICATIONS;
       const startButton = document.querySelector("#startButton");
       const restartButton = document.querySelector("#restartButton");
       const homeScreen = document.querySelector("#homeScreen");
@@ -560,9 +559,9 @@
 
       function makeSequence() {
         const rounds = [];
-        for (let round = 0; round < 3; round += 1) {
+        for (let round = 0; round < REPLICATIONS; round += 1) {
           let nextRound = shuffle(COLORS);
-          while (round > 0 && nextRound[0].name === rounds[round - 1][4].name) {
+          while (round > 0 && nextRound[0].name === rounds[round - 1][COLORS.length - 1].name) {
             nextRound = shuffle(COLORS);
           }
           rounds.push(nextRound);
@@ -740,7 +739,7 @@
             <div class="color-mean">
               <span class="color-mean-name"><i class="table-dot" style="background:${color.dot}"></i>${color.name}</span>
               <strong class="color-mean-value">${mean.toFixed(1)} ms</strong>
-              <span class="color-mean-count">3 trials</span>
+              <span class="color-mean-count">${REPLICATIONS} trials</span>
             </div>
           `;
         }).join("");
