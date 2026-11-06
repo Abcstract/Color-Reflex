@@ -8,13 +8,12 @@ The project is self-contained: there are no external libraries, databases, or in
 
 This project studies whether the color of the screen affects human visual reaction time.
 
-The experiment uses five screen-color conditions:
+The experiment uses four screen-color conditions (equal saturation):
 
 - Red
 - Blue
 - Green
-- Black
-- White
+- Gray
 
 Reaction time is the dependent variable and is measured in milliseconds from the moment the button appears to the moment the participant clicks it.
 
