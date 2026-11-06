@@ -17,7 +17,7 @@ The experiment uses four screen-color conditions (equal saturation):
 
 Reaction time is the dependent variable and is measured in milliseconds from the moment the button appears to the moment the participant clicks it.
 
-Each color appears three times, creating 15 valid trials per test. The same color does not appear twice in a row, and every color appears once before the next round begins. If a participant clicks before the button appears, that attempt is marked void, the participant waits three seconds, and the color is rescheduled later so the test still contains 15 valid trials.
+Each color appears three times, creating 12 valid trials per test. The same color does not appear twice in a row, and every color appears once before the next round begins. If a participant clicks before the button appears, that attempt is marked void, the participant waits three seconds, and the color is rescheduled later so the test still contains 12 valid trials.
 
 ## Statistical analysis: one-way ANOVA
 
@@ -27,7 +27,7 @@ A one-way ANOVA can be used to test whether the mean reaction time differs acros
 
 ### Hypotheses
 
-- **Null hypothesis:** The mean reaction time is the same for all five colors.
+- **Null hypothesis:** The mean reaction time is the same for all four colors.
 - **Alternative hypothesis:** At least one color has a different mean reaction time.
 
 The results page reports the overall mean, fastest and slowest reactions, the reaction time for every trial, and the mean reaction time for each color. Those values can be exported with the **Copy results** button and entered into a statistical program for ANOVA.
