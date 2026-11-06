@@ -42,13 +42,3 @@ If the same participant completes every color condition, the statistically appro
 3. Click **Begin test**.
 
 No server or installation is required for basic use.
-
-## Publish with GitHub Pages
-
-1. Create a new GitHub repository.
-2. Upload `index.html` and this `README.md` to the repository root.
-3. Open the repository's **Settings → Pages**.
-4. Under **Build and deployment**, choose **Deploy from a branch**.
-5. Select the `main` branch and the `/ (root)` folder, then save.
-
-GitHub will provide a public webpage link after it finishes publishing.
