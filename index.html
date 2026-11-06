@@ -1,0 +1,826 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f7f5f0" />
+    <title>Color Reflex — Reaction Test</title>
+    <style>
+      :root {
+        --ink: #121212;
+        --muted: #6e6b66;
+        --paper: #f7f5f0;
+        --line: rgba(18, 18, 18, 0.12);
+        --card: rgba(255, 255, 255, 0.76);
+        --shadow: 0 24px 70px rgba(49, 42, 30, 0.12);
+        --radius-lg: 28px;
+      }
+
+      * { box-sizing: border-box; }
+
+      html, body { min-height: 100%; }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at 10% 5%, rgba(255, 208, 112, 0.25), transparent 28%),
+          radial-gradient(circle at 92% 86%, rgba(126, 201, 255, 0.2), transparent 25%),
+          var(--paper);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      button { font: inherit; }
+
+      .app-shell {
+        width: min(1120px, calc(100% - 40px));
+        margin: 0 auto;
+        padding: 28px 0 48px;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 62px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--ink);
+        text-decoration: none;
+        font-size: 0.82rem;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .brand-mark {
+        display: inline-grid;
+        width: 30px;
+        height: 30px;
+        place-items: center;
+        color: #fff;
+        border-radius: 10px;
+        background: var(--ink);
+        font-size: 0.8rem;
+        letter-spacing: 0;
+      }
+
+      .topbar-note {
+        color: var(--muted);
+        font-size: 0.76rem;
+        font-weight: 700;
+        letter-spacing: 0.11em;
+        text-transform: uppercase;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
+        align-items: end;
+        gap: clamp(40px, 8vw, 118px);
+        margin-bottom: 62px;
+      }
+
+      .eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0 0 20px;
+        color: #b35e38;
+        font-size: 0.76rem;
+        font-weight: 850;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow::before {
+        width: 28px;
+        height: 2px;
+        border-radius: 99px;
+        background: currentColor;
+        content: "";
+      }
+
+      h1 {
+        max-width: 650px;
+        margin: 0;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(3.9rem, 8.5vw, 8.4rem);
+        font-weight: 400;
+        letter-spacing: -0.075em;
+        line-height: 0.84;
+      }
+
+      .hero-copy {
+        max-width: 360px;
+        margin: 0 0 3px;
+        color: var(--muted);
+        font-size: 1.02rem;
+        line-height: 1.65;
+      }
+
+      .hero-copy strong { color: var(--ink); }
+
+      .home-card {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 210px;
+        align-items: center;
+        gap: 44px;
+        min-height: 246px;
+        padding: 28px 30px 28px 34px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
+        background: var(--card);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(16px);
+      }
+
+      .section-label {
+        margin: 0 0 12px;
+        color: var(--muted);
+        font-size: 0.69rem;
+        font-weight: 850;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+      }
+
+      .home-card h2 {
+        max-width: 410px;
+        margin: 0 0 12px;
+        font-size: clamp(1.45rem, 2.5vw, 2.1rem);
+        letter-spacing: -0.045em;
+        line-height: 1.02;
+      }
+
+      .home-card p {
+        max-width: 450px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.9rem;
+        line-height: 1.55;
+      }
+
+      .primary-button {
+        position: relative;
+        min-height: 58px;
+        padding: 0 25px;
+        color: #fff;
+        border: 0;
+        border-radius: 100px;
+        background: var(--ink);
+        box-shadow: 0 10px 0 rgba(18, 18, 18, 0.11);
+        cursor: pointer;
+        font-size: 0.88rem;
+        font-weight: 850;
+        letter-spacing: 0.02em;
+        transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+      }
+
+      .primary-button::after {
+        display: inline-block;
+        margin-left: 12px;
+        content: "→";
+        font-size: 1.1rem;
+        transition: transform 160ms ease;
+      }
+
+      .primary-button:hover { background: #30302e; transform: translateY(-2px); box-shadow: 0 12px 0 rgba(18, 18, 18, 0.1); }
+      .primary-button:hover::after { transform: translateX(4px); }
+      .primary-button:active { transform: translateY(3px); box-shadow: 0 5px 0 rgba(18, 18, 18, 0.11); }
+      .primary-button:focus-visible, .reaction-button:focus-visible, .secondary-button:focus-visible { outline: 4px solid rgba(179, 94, 56, 0.35); outline-offset: 4px; }
+
+      .color-key {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-top: 16px;
+        color: var(--muted);
+        font-size: 0.73rem;
+        font-weight: 750;
+        letter-spacing: 0.04em;
+      }
+
+      .swatches { display: flex; gap: 5px; }
+      .swatch { width: 14px; height: 14px; border-radius: 50%; border: 1px solid rgba(18, 18, 18, 0.12); }
+      .swatch.red { background: #ff5264; }
+      .swatch.blue { background: #4385f4; }
+      .swatch.green { background: #25c66b; }
+      .swatch.black { background: #101114; }
+      .swatch.white { background: #fff; }
+
+      .instructions {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+      }
+
+      .instruction {
+        padding-top: 18px;
+        border-top: 1px solid var(--line);
+      }
+
+      .instruction-number {
+        display: block;
+        margin-bottom: 20px;
+        color: #b35e38;
+        font-family: Georgia, serif;
+        font-size: 1.1rem;
+      }
+
+      .instruction strong { display: block; margin-bottom: 6px; font-size: 0.9rem; }
+      .instruction span { display: block; max-width: 260px; color: var(--muted); font-size: 0.79rem; line-height: 1.55; }
+
+      .screen {
+        position: fixed;
+        z-index: 10;
+        inset: 0;
+        display: none;
+        overflow: hidden;
+      }
+
+      .screen.active { display: block; }
+
+      .test-stage {
+        position: absolute;
+        inset: 0;
+        transition: background-color 220ms ease;
+      }
+
+      .countdown-overlay {
+        position: absolute;
+        z-index: 5;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: var(--ink);
+        background: var(--paper);
+      }
+
+      .countdown-overlay:not(.active) { display: none; }
+      .countdown-kicker { margin-bottom: 14px; color: var(--muted); font-size: 0.76rem; font-weight: 850; letter-spacing: 0.16em; text-transform: uppercase; }
+      .countdown-value { font-family: Georgia, serif; font-size: clamp(7rem, 20vw, 13rem); font-weight: 400; letter-spacing: -0.09em; line-height: 0.8; }
+
+      .test-hud {
+        position: absolute;
+        z-index: 2;
+        top: 22px;
+        right: 24px;
+        left: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: rgba(255, 255, 255, 0.72);
+        font-size: 0.72rem;
+        font-weight: 850;
+        letter-spacing: 0.12em;
+        pointer-events: none;
+        text-transform: uppercase;
+      }
+
+      .test-hud.dark { color: rgba(18, 18, 18, 0.55); }
+
+      .progress-track {
+        position: absolute;
+        right: 24px;
+        bottom: 22px;
+        left: 24px;
+        z-index: 2;
+        height: 3px;
+        overflow: hidden;
+        border-radius: 99px;
+        background: rgba(255, 255, 255, 0.25);
+        pointer-events: none;
+      }
+
+      .progress-track.dark { background: rgba(18, 18, 18, 0.16); }
+      .progress-bar { width: 0; height: 100%; border-radius: inherit; background: currentColor; transition: width 220ms ease; }
+
+      .wait-message {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        color: rgba(255, 255, 255, 0.68);
+        font-size: 0.76rem;
+        font-weight: 850;
+        letter-spacing: 0.16em;
+        pointer-events: none;
+        text-align: center;
+        text-transform: uppercase;
+        transform: translate(-50%, -50%);
+        transition: opacity 180ms ease;
+      }
+
+      .wait-message.dark { color: rgba(18, 18, 18, 0.48); }
+      .wait-message.hidden { opacity: 0; }
+
+      .reaction-button {
+        position: absolute;
+        z-index: 3;
+        top: 50%;
+        left: 50%;
+        width: 250px;
+        height: 116px;
+        border: 0;
+        border-radius: 999px;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18), inset 0 -3px rgba(0, 0, 0, 0.11);
+        cursor: pointer;
+        font-size: 0.82rem;
+        font-weight: 900;
+        letter-spacing: 0.1em;
+        opacity: 0;
+        text-transform: uppercase;
+        transform: translate(-50%, -50%) scale(0.94);
+        transition: opacity 120ms ease, transform 120ms ease, box-shadow 120ms ease;
+      }
+
+      .reaction-button.visible { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); }
+      .reaction-button:not(.visible) { pointer-events: none; }
+      .reaction-button:hover { box-shadow: 0 16px 36px rgba(0, 0, 0, 0.22), inset 0 -3px rgba(0, 0, 0, 0.11); }
+      .reaction-button:active { transform: translate(-50%, -50%) scale(0.97); }
+
+      .results-screen {
+        position: fixed;
+        z-index: 20;
+        inset: 0;
+        display: none;
+        overflow: auto;
+        background:
+          radial-gradient(circle at 12% 10%, rgba(255, 208, 112, 0.22), transparent 25%),
+          radial-gradient(circle at 88% 80%, rgba(126, 201, 255, 0.18), transparent 24%),
+          var(--paper);
+      }
+
+      .results-screen.active { display: block; }
+
+      .results-inner { width: min(900px, calc(100% - 40px)); margin: 0 auto; padding: 50px 0 70px; }
+
+      .results-heading { display: flex; align-items: end; justify-content: space-between; gap: 25px; margin-bottom: 35px; }
+      .results-heading h2 { margin: 0; font-family: Georgia, serif; font-size: clamp(3.4rem, 8vw, 6.6rem); font-weight: 400; letter-spacing: -0.075em; line-height: 0.85; }
+      .results-heading p { max-width: 210px; margin: 0 0 4px; color: var(--muted); font-size: 0.9rem; line-height: 1.5; }
+
+      .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 30px; }
+      .metric { padding: 22px 24px; border: 1px solid var(--line); border-radius: 18px; background: rgba(255, 255, 255, 0.6); }
+      .metric-label { display: block; margin-bottom: 12px; color: var(--muted); font-size: 0.68rem; font-weight: 850; letter-spacing: 0.12em; text-transform: uppercase; }
+      .metric-value { display: block; font-family: Georgia, serif; font-size: clamp(1.8rem, 4vw, 2.75rem); letter-spacing: -0.06em; }
+
+      .results-card { overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius-lg); background: rgba(255, 255, 255, 0.72); box-shadow: var(--shadow); }
+      .color-means-card { margin-top: 12px; }
+      .results-card-head { display: flex; justify-content: space-between; gap: 20px; padding: 20px 24px; border-bottom: 1px solid var(--line); }
+      .results-card-head strong { font-size: 0.82rem; }
+      .results-card-head span { color: var(--muted); font-size: 0.75rem; }
+      .color-means-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; padding: 14px 18px 18px; }
+      .color-mean { min-width: 0; padding: 16px 12px; border: 1px solid var(--line); border-radius: 14px; background: rgba(255, 255, 255, 0.48); }
+      .color-mean-name { display: flex; align-items: center; gap: 7px; margin-bottom: 14px; font-size: 0.72rem; font-weight: 800; }
+      .color-mean-value { display: block; font-family: Georgia, serif; font-size: 1.45rem; letter-spacing: -0.055em; white-space: nowrap; }
+      .color-mean-count { display: block; margin-top: 5px; color: var(--muted); font-size: 0.64rem; }
+      .results-table-wrap { overflow-x: auto; }
+      table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+      th { padding: 13px 24px; color: var(--muted); background: rgba(18, 18, 18, 0.035); font-size: 0.65rem; font-weight: 850; letter-spacing: 0.1em; text-align: left; text-transform: uppercase; }
+      td { padding: 14px 24px; border-top: 1px solid var(--line); }
+      td:last-child, th:last-child { text-align: right; }
+      .trial-number { color: var(--muted); font-variant-numeric: tabular-nums; }
+      .color-name { display: inline-flex; align-items: center; gap: 9px; font-weight: 750; }
+      .table-dot { display: inline-block; width: 10px; height: 10px; border: 1px solid rgba(18, 18, 18, 0.12); border-radius: 50%; }
+      .time-cell { font-variant-numeric: tabular-nums; font-weight: 850; }
+      .results-actions { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 28px; }
+      .secondary-button { min-height: 50px; padding: 0 22px; color: var(--ink); border: 1px solid var(--line); border-radius: 100px; background: rgba(255,255,255,0.55); cursor: pointer; font-size: 0.8rem; font-weight: 850; transition: background 160ms ease, transform 160ms ease; }
+      .secondary-button:hover { background: #fff; transform: translateY(-1px); }
+      .copy-feedback { min-width: 82px; color: var(--muted); font-size: 0.72rem; font-weight: 750; }
+
+      @media (max-width: 740px) {
+        .app-shell { width: min(100% - 28px, 560px); padding-top: 20px; }
+        .topbar { margin-bottom: 46px; }
+        .topbar-note { display: none; }
+        .hero { display: block; margin-bottom: 42px; }
+        h1 { font-size: clamp(4.3rem, 20vw, 7rem); }
+        .hero-copy { margin-top: 28px; }
+        .home-card { display: block; padding: 25px 24px 24px; }
+        .home-card p { max-width: none; }
+        .home-card .primary-button { width: 100%; margin-top: 24px; }
+        .color-key { margin-top: 20px; }
+        .instructions { grid-template-columns: 1fr; gap: 22px; margin-top: 45px; }
+        .instruction-number { margin-bottom: 9px; }
+        .instruction span { max-width: none; }
+        .test-hud { top: 18px; right: 18px; left: 18px; }
+        .progress-track { right: 18px; bottom: 18px; left: 18px; }
+        .reaction-button { width: 210px; height: 92px; }
+        .results-inner { width: min(100% - 28px, 560px); padding-top: 30px; }
+        .results-heading { display: block; margin-bottom: 28px; }
+        .results-heading p { margin-top: 22px; }
+        .metrics { gap: 7px; }
+        .metric { padding: 16px 12px; }
+        .metric-label { font-size: 0.57rem; }
+        .metric-value { font-size: 1.65rem; }
+        th, td { padding-right: 14px; padding-left: 14px; }
+        .color-means-grid { grid-template-columns: repeat(2, 1fr); padding-right: 14px; padding-left: 14px; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="app-shell" id="homeScreen" aria-labelledby="pageTitle">
+      <nav class="topbar" aria-label="Main navigation">
+        <a class="brand" href="#" aria-label="Color Reflex home"><span class="brand-mark">CR</span> Color Reflex</a>
+        <span class="topbar-note">A 15-trial reaction test</span>
+      </nav>
+
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Ready when you are</p>
+          <h1 id="pageTitle">See.<br />React.<br /><em>Repeat.</em></h1>
+        </div>
+        <p class="hero-copy">A simple test of visual reflexes. <strong>Wait for the button.</strong> Click it as quickly as you can, then see how every trial stacks up.</p>
+      </section>
+
+      <section class="home-card" aria-labelledby="startHeading">
+        <div>
+          <p class="section-label">Your challenge</p>
+          <h2 id="startHeading">How fast can you respond to color?</h2>
+          <p>Five colors. Three rounds. Fifteen chances to find your fastest response. The button will appear large and centered every time.</p>
+          <div class="color-key" aria-label="Colors in the test">
+            <span class="swatches" aria-hidden="true"><i class="swatch red"></i><i class="swatch blue"></i><i class="swatch green"></i><i class="swatch black"></i><i class="swatch white"></i></span>
+            <span>15 trials · measured in milliseconds</span>
+          </div>
+        </div>
+        <button class="primary-button" id="startButton" type="button">Begin test</button>
+      </section>
+
+      <section class="instructions" aria-label="How it works">
+        <div class="instruction"><span class="instruction-number">01</span><strong>Get set</strong><span>The screen changes to a new color. Keep your eyes open.</span></div>
+        <div class="instruction"><span class="instruction-number">02</span><strong>Find the button</strong><span>It appears after a short pause, large and centered on the screen.</span></div>
+        <div class="instruction"><span class="instruction-number">03</span><strong>Tap quickly</strong><span>Your reaction time is captured the moment you click.</span></div>
+      </section>
+    </main>
+
+    <section class="screen" id="testScreen" aria-label="Reaction test" aria-live="polite">
+      <div class="test-stage" id="testStage">
+        <div class="countdown-overlay active" id="countdownOverlay" aria-live="assertive" aria-label="Get ready">
+          <span class="countdown-kicker">Get ready</span>
+          <strong class="countdown-value" id="countdownValue">3</strong>
+        </div>
+        <div class="test-hud" id="testHud"><span>Color Reflex</span><span id="trialLabel">Trial 01 / 15</span></div>
+        <div class="wait-message" id="waitMessage">Wait for it</div>
+        <button class="reaction-button" id="reactionButton" type="button" aria-label="Click now">Click</button>
+        <div class="progress-track" id="progressTrack"><div class="progress-bar" id="progressBar"></div></div>
+      </div>
+    </section>
+
+    <section class="results-screen" id="resultsScreen" aria-labelledby="resultsTitle">
+      <div class="results-inner">
+        <div class="results-heading">
+          <div><p class="eyebrow">Test complete</p><h2 id="resultsTitle">Your<br /><em>reflex.</em></h2></div>
+          <p>Every response tells a small story. Here’s the full picture from all 15 trials.</p>
+        </div>
+
+        <div class="metrics" aria-label="Summary results">
+          <div class="metric"><span class="metric-label">Average</span><span class="metric-value" id="averageTime">—</span></div>
+          <div class="metric"><span class="metric-label">Fastest</span><span class="metric-value" id="fastestTime">—</span></div>
+          <div class="metric"><span class="metric-label">Slowest</span><span class="metric-value" id="slowestTime">—</span></div>
+        </div>
+
+        <div class="results-card">
+          <div class="results-card-head"><strong>Trial breakdown</strong><span>Reaction time · milliseconds</span></div>
+          <div class="results-table-wrap">
+            <table>
+              <thead><tr><th>Trial</th><th>Screen color</th><th>Response</th></tr></thead>
+              <tbody id="resultsBody"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="results-card color-means-card">
+          <div class="results-card-head"><strong>Mean by color</strong><span>Average across 3 trials</span></div>
+          <div class="color-means-grid" id="colorMeans"></div>
+        </div>
+        <div class="results-actions">
+          <button class="secondary-button" id="copyResultsButton" type="button">Copy results&nbsp; ⧉</button>
+          <button class="secondary-button" id="restartButton" type="button">Try again&nbsp; ↗</button>
+          <span class="copy-feedback" id="copyFeedback" role="status" aria-live="polite"></span>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      const COLORS = [
+        { name: "Red", screen: "#ff5264", button: "#08d9ef", text: "#071115", dot: "#ff5264", dark: false },
+        { name: "Blue", screen: "#4385f4", button: "#ffe255", text: "#141100", dot: "#4385f4", dark: false },
+        { name: "Green", screen: "#25c66b", button: "#e85ee8", text: "#18051a", dot: "#25c66b", dark: false },
+        { name: "Black", screen: "#101114", button: "#ffffff", text: "#101114", dot: "#101114", dark: false },
+        { name: "White", screen: "#f7f7f4", button: "#101114", text: "#ffffff", dot: "#ffffff", dark: true }
+      ];
+
+      const TOTAL_TRIALS = 15;
+      const startButton = document.querySelector("#startButton");
+      const restartButton = document.querySelector("#restartButton");
+      const homeScreen = document.querySelector("#homeScreen");
+      const testScreen = document.querySelector("#testScreen");
+      const resultsScreen = document.querySelector("#resultsScreen");
+      const testStage = document.querySelector("#testStage");
+      const testHud = document.querySelector("#testHud");
+      const progressTrack = document.querySelector("#progressTrack");
+      const progressBar = document.querySelector("#progressBar");
+      const trialLabel = document.querySelector("#trialLabel");
+      const waitMessage = document.querySelector("#waitMessage");
+      const reactionButton = document.querySelector("#reactionButton");
+      const countdownOverlay = document.querySelector("#countdownOverlay");
+      const countdownValue = document.querySelector("#countdownValue");
+      const resultsBody = document.querySelector("#resultsBody");
+      const colorMeans = document.querySelector("#colorMeans");
+      const copyResultsButton = document.querySelector("#copyResultsButton");
+      const copyFeedback = document.querySelector("#copyFeedback");
+
+      let sequence = [];
+      let currentTrial = 0;
+      let trialStartedAt = 0;
+      let appearanceTimer = null;
+      let results = [];
+      let testInProgress = false;
+      let countdownTimer = null;
+      let falseStartTimer = null;
+      let falseStartActive = false;
+
+      function shuffle(items) {
+        const copy = [...items];
+        for (let index = copy.length - 1; index > 0; index -= 1) {
+          const swapIndex = Math.floor(Math.random() * (index + 1));
+          [copy[index], copy[swapIndex]] = [copy[swapIndex], copy[index]];
+        }
+        return copy;
+      }
+
+      function makeSequence() {
+        const rounds = [];
+        for (let round = 0; round < 3; round += 1) {
+          let nextRound = shuffle(COLORS);
+          while (round > 0 && nextRound[0].name === rounds[round - 1][4].name) {
+            nextRound = shuffle(COLORS);
+          }
+          rounds.push(nextRound);
+        }
+        return rounds.flat();
+      }
+
+      function setScreenColor(color) {
+        testStage.style.backgroundColor = color.screen;
+        reactionButton.style.backgroundColor = color.button;
+        reactionButton.style.color = color.text;
+        const needsDarkText = color.dark;
+        testHud.classList.toggle("dark", needsDarkText);
+        waitMessage.classList.toggle("dark", needsDarkText);
+        progressTrack.classList.toggle("dark", needsDarkText);
+        progressTrack.style.color = needsDarkText ? "#101114" : "#ffffff";
+      }
+
+      function placeButton() {
+        reactionButton.style.left = "50%";
+        reactionButton.style.top = "50%";
+      }
+
+      function startTest() {
+        window.clearTimeout(appearanceTimer);
+        window.clearInterval(countdownTimer);
+        window.clearInterval(falseStartTimer);
+        falseStartActive = false;
+        sequence = makeSequence();
+        results = [];
+        currentTrial = 0;
+        testInProgress = true;
+        homeScreen.setAttribute("aria-hidden", "true");
+        testScreen.classList.add("active");
+        resultsScreen.classList.remove("active");
+        document.body.style.overflow = "hidden";
+        beginCountdown();
+      }
+
+      function scheduleRedo(color) {
+        const minimumIndex = Math.min(currentTrial + 1, sequence.length);
+        const validPositions = [];
+        for (let index = minimumIndex; index <= sequence.length; index += 1) {
+          const before = sequence[index - 1];
+          const after = sequence[index];
+          if (before && before.name === color.name) continue;
+          if (after && after.name === color.name) continue;
+          validPositions.push(index);
+        }
+        const insertAt = validPositions.length
+          ? validPositions[Math.floor(Math.random() * validPositions.length)]
+          : sequence.length;
+        sequence.splice(insertAt, 0, color);
+      }
+
+      function handleEarlyClick(event) {
+        if (event.target.closest("#reactionButton")) return;
+        if (!testInProgress || countdownOverlay.classList.contains("active") || !reactionButton.disabled || falseStartActive) return;
+
+        falseStartActive = true;
+        window.clearTimeout(appearanceTimer);
+        reactionButton.classList.remove("visible");
+        reactionButton.disabled = true;
+        trialStartedAt = 0;
+
+        const voidColor = sequence[currentTrial];
+        sequence.splice(currentTrial, 1);
+        scheduleRedo(voidColor);
+        trialLabel.textContent = `Trial ${String(currentTrial + 1).padStart(2, "0")} / ${TOTAL_TRIALS} · void`;
+
+        let secondsRemaining = 3;
+        waitMessage.textContent = `Clicked too early — wait ${secondsRemaining} seconds`;
+        waitMessage.classList.remove("hidden");
+        falseStartTimer = window.setInterval(() => {
+          secondsRemaining -= 1;
+          if (secondsRemaining > 0) {
+            waitMessage.textContent = `Clicked too early — wait ${secondsRemaining} second${secondsRemaining === 1 ? "" : "s"}`;
+            return;
+          }
+          window.clearInterval(falseStartTimer);
+          falseStartActive = false;
+          beginTrial();
+        }, 1000);
+      }
+
+      function beginCountdown() {
+        testStage.style.backgroundColor = "var(--paper)";
+        testHud.classList.add("dark");
+        progressTrack.classList.add("dark");
+        progressTrack.style.color = "#101114";
+        waitMessage.classList.add("hidden");
+        reactionButton.classList.remove("visible");
+        reactionButton.disabled = true;
+        trialStartedAt = 0;
+        countdownOverlay.classList.add("active");
+        let count = 3;
+        countdownValue.textContent = count;
+        countdownTimer = window.setInterval(() => {
+          count -= 1;
+          if (count > 0) {
+            countdownValue.textContent = count;
+            return;
+          }
+          window.clearInterval(countdownTimer);
+          countdownOverlay.classList.remove("active");
+          beginTrial();
+        }, 1000);
+      }
+
+      function beginTrial() {
+        const color = sequence[currentTrial];
+        setScreenColor(color);
+        trialLabel.textContent = `Trial ${String(currentTrial + 1).padStart(2, "0")} / ${TOTAL_TRIALS}`;
+        progressBar.style.width = `${(currentTrial / TOTAL_TRIALS) * 100}%`;
+        waitMessage.textContent = "Wait for it";
+        waitMessage.classList.remove("hidden");
+        reactionButton.classList.remove("visible");
+        reactionButton.disabled = true;
+        placeButton();
+
+        const pause = 650 + Math.random() * 1250;
+        appearanceTimer = window.setTimeout(() => {
+          requestAnimationFrame(() => {
+            reactionButton.disabled = false;
+            reactionButton.classList.add("visible");
+            waitMessage.classList.add("hidden");
+            trialStartedAt = performance.now();
+          });
+        }, pause);
+      }
+
+      function recordReaction() {
+        if (!testInProgress || reactionButton.disabled || !trialStartedAt) return;
+        const reactionTime = Math.max(0, Math.round(performance.now() - trialStartedAt));
+        results.push({ color: sequence[currentTrial], time: reactionTime });
+        trialStartedAt = 0;
+        currentTrial += 1;
+        if (currentTrial >= TOTAL_TRIALS) {
+          finishTest();
+        } else {
+          beginTrial();
+        }
+      }
+
+      function finishTest() {
+        testInProgress = false;
+        window.clearTimeout(appearanceTimer);
+        window.clearInterval(countdownTimer);
+        window.clearInterval(falseStartTimer);
+        falseStartActive = false;
+        countdownOverlay.classList.remove("active");
+        testScreen.classList.remove("active");
+        resultsScreen.classList.add("active");
+        document.body.style.overflow = "auto";
+        renderResults();
+      }
+
+      function renderResults() {
+        const times = results.map((result) => result.time);
+        const average = Math.round(times.reduce((sum, time) => sum + time, 0) / times.length);
+        document.querySelector("#averageTime").textContent = `${average} ms`;
+        document.querySelector("#fastestTime").textContent = `${Math.min(...times)} ms`;
+        document.querySelector("#slowestTime").textContent = `${Math.max(...times)} ms`;
+        resultsBody.innerHTML = results.map((result, index) => `
+          <tr>
+            <td class="trial-number">${String(index + 1).padStart(2, "0")}</td>
+            <td><span class="color-name"><i class="table-dot" style="background:${result.color.dot}"></i>${result.color.name}</span></td>
+            <td class="time-cell">${result.time} ms</td>
+          </tr>
+        `).join("");
+        colorMeans.innerHTML = COLORS.map((color) => {
+          const colorTimes = results.filter((result) => result.color.name === color.name).map((result) => result.time);
+          const mean = colorTimes.reduce((sum, time) => sum + time, 0) / colorTimes.length;
+          return `
+            <div class="color-mean">
+              <span class="color-mean-name"><i class="table-dot" style="background:${color.dot}"></i>${color.name}</span>
+              <strong class="color-mean-value">${mean.toFixed(1)} ms</strong>
+              <span class="color-mean-count">3 trials</span>
+            </div>
+          `;
+        }).join("");
+      }
+
+      function buildResultsText() {
+        const times = results.map((result) => result.time);
+        const average = Math.round(times.reduce((sum, time) => sum + time, 0) / times.length);
+        const fastest = Math.min(...times);
+        const slowest = Math.max(...times);
+        const means = COLORS.map((color) => {
+          const colorTimes = results.filter((result) => result.color.name === color.name).map((result) => result.time);
+          const mean = colorTimes.reduce((sum, time) => sum + time, 0) / colorTimes.length;
+          return `${color.name}: ${mean.toFixed(1)} ms`;
+        });
+        const trials = results.map((result, index) => `${String(index + 1).padStart(2, "0")}. ${result.color.name} — ${result.time} ms`);
+        return [
+          "COLOR REFLEX — REACTION TEST RESULTS",
+          "",
+          `Overall average: ${average} ms`,
+          `Fastest: ${fastest} ms`,
+          `Slowest: ${slowest} ms`,
+          "",
+          "MEAN BY COLOR",
+          ...means,
+          "",
+          "TRIAL BREAKDOWN",
+          ...trials
+        ].join("\\n");
+      }
+
+      async function copyResults() {
+        const text = buildResultsText();
+        let copied = false;
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(text);
+            copied = true;
+          }
+        } catch (error) {
+          copied = false;
+        }
+        if (!copied) {
+          const textArea = document.createElement("textarea");
+          textArea.value = text;
+          textArea.setAttribute("readonly", "");
+          textArea.style.position = "fixed";
+          textArea.style.opacity = "0";
+          document.body.appendChild(textArea);
+          textArea.select();
+          try { copied = document.execCommand("copy"); } catch (error) { copied = false; }
+          textArea.remove();
+        }
+        copyFeedback.textContent = copied ? "Copied!" : "Copy failed";
+        window.setTimeout(() => { copyFeedback.textContent = ""; }, 2200);
+      }
+
+      startButton.addEventListener("click", startTest);
+      restartButton.addEventListener("click", startTest);
+      copyResultsButton.addEventListener("click", copyResults);
+      reactionButton.addEventListener("click", recordReaction);
+      testStage.addEventListener("click", handleEarlyClick);
+
+      window.addEventListener("resize", () => {
+        if (testInProgress && reactionButton.disabled) placeButton();
+      });
+
+      window.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && testInProgress) {
+          window.clearTimeout(appearanceTimer);
+          window.clearInterval(countdownTimer);
+          window.clearInterval(falseStartTimer);
+          falseStartActive = false;
+          countdownOverlay.classList.remove("active");
+          testInProgress = false;
+          testScreen.classList.remove("active");
+          document.body.style.overflow = "auto";
+          homeScreen.setAttribute("aria-hidden", "false");
+        }
+      });
+    </script>
+  </body>
+</html>
