@@ -679,7 +679,7 @@
           waitMessage.textContent = "Please wait";
           waitMessage.classList.remove("hidden");
 
-          const pause = 650 + Math.random() * 1250;
+          const pause = 1000 + Math.random() * 2000;
           appearanceTimer = window.setTimeout(() => {
             requestAnimationFrame(() => {
               reactionButton.disabled = false;
